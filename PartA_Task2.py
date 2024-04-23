@@ -76,3 +76,22 @@ if __name__ == "__main__":
             print(f"Datetime: {datetime}, Post: {post['content']}, Time: {post['time']}")
     else:
         print("No posts found within the specified time range.")
+
+print("\n--------------------------------------------------------------------------------------------")
+
+# TEST CASE 2: Specifying the time range
+start_time = "2024-04-20 14:00:00"
+end_time = "2024-04-20 15:00:00"
+
+
+# TEST CASE 3: Specifying the time range
+posts_in_range = bst.search_posts_in_range(start_time, end_time)
+
+print(f"Posts within the time range {start_time} to {end_time}:")
+if posts_in_range:
+    for datetime, post in posts_in_range:
+        print(f"Datetime: {datetime}, Post: {post['content']}, Time: {post['time']}")
+else:
+    print("No posts found within the specified time range.")
+
+print("\n--------------------------------------------------------------------------------------------")
