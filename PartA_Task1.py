@@ -46,4 +46,19 @@ if __name__ == "__main__":
     hash_table.insert("2024-04-21 13:15:00", "Post 5", "cat6789")
     hash_table.insert("2024-04-22 09:30:00", "Post 6", "maitha_maitha")
 
+# Finding a specific post by "its unique datetime value from the test case"
+    post_datetime = "2024-04-20 11:30:00"
+    post_content, poster_name = hash_table.get(post_datetime)
+    print("--------------------------------------------------------------------------------------------------")
+    print("\nFinding a post by its unique datetime value: ")
+    if post_content:
+        print(f"\nPost found at {post_datetime} by {poster_name}: {post_content}")
+    else:
+        print(f"No post found at {post_datetime}")
+
+    print("\n--------------------------------------------------------------------------------------------------")
+
+    # Prompt the user to press Enter to exit
+    input("Press Enter to exit...")
+
 
