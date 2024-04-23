@@ -23,3 +23,27 @@ class HashTable:
                     break
             else:
                 self.table[index].append((key, value, name))
+
+
+    def get(self, key):
+        index = self._hash(key)
+        if self.table[index] is not None:
+            for k, v, n in self.table[index]:
+                if k == key:
+                    return v, n  #returing the post content and the name of the person
+        return None, None  # returning "None" if post is not found
+
+# Example usage to test:
+if __name__ == "__main__":
+# creating a hash table with the size 10
+    hash_table = HashTable(10)
+
+# Test Case For "Inserting posts with unique datetime values"
+    hash_table.insert("2024-04-20 10:00:00", "Post 1", "sara_khalid")
+    hash_table.insert("2024-04-20 11:30:00", "Post 2", "dott2001")
+    hash_table.insert("2024-04-20 15:45:00", "Post 3", "BobBob")
+    hash_table.insert("2024-04-21 08:00:00", "Post 4", "Salma__1")
+    hash_table.insert("2024-04-21 13:15:00", "Post 5", "cat6789")
+    hash_table.insert("2024-04-22 09:30:00", "Post 6", "maitha_maitha")
+
+
