@@ -39,3 +39,44 @@ if __name__ == "__main__":
         print("No posts available.")
 
 print("\n------------------------------------------------------------------------------------------------")
+
+
+#TEAST CASE 2:creating a Max Heap
+max_heap = MaxHeap()
+
+# Inserting posts with view counts and the name of the poster
+max_heap.insert({"content": "Post 1", "views": 300, "poster": "User X"})
+max_heap.insert({"content": "Post 2", "views": 150, "poster": "User Y"})
+max_heap.insert({"content": "Post 3", "views": 250, "poster": "User Z"})
+max_heap.insert({"content": "Post 4", "views": 400, "poster": "User W"})
+max_heap.insert({"content": "Post 5", "views": 200, "poster": "User V"})
+
+# Retrieve the post with the highest number of views
+max_views_post = max_heap.get_max_views_post()
+
+if max_views_post:
+    print(f"The post with the highest number of views is: {max_views_post['content']} with {max_views_post['views']} views, posted by {max_views_post['poster']}.")
+else:
+    print("No posts available.")
+
+print("\n------------------------------------------------------------------------------------------------")
+
+#TEAST CASE 2:creating a Max Heap
+max_heap = MaxHeap()
+
+# Inserting posts with view counts and the name of the poster
+max_heap.insert({"content": "Post A", "views": 150, "poster": "User P"})
+max_heap.insert({"content": "Post B", "views": 250, "poster": "User Q"})
+max_heap.insert({"content": "Post C", "views": 100, "poster": "User R"})
+max_heap.insert({"content": "Post D", "views": 350, "poster": "User S"})
+max_heap.insert({"content": "Post E", "views": 200, "poster": "User T"})
+
+#getting back the post with the highest number of veiws to identify them
+max_views_post = max_heap.get_max_views_post()
+
+if max_views_post:
+    print(f"The post with the highest number of views is: {max_views_post['content']} with {max_views_post['views']} views, posted by {max_views_post['poster']}.")
+else:
+    print("No posts available.")
+
+print("\n------------------------------------------------------------------------------------------------")
