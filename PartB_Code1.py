@@ -26,44 +26,49 @@ class NetworkGraph:
         self.nodes[origin][destination] = Road(pathway_id, distance)
         self.nodes[destination][origin] = Road(pathway_id, distance)
 
-# Function for the search algorithm used to find the best path
-def best_first_search(network, start_point):
-    # Priority queue to hold nodes to visit with cost, current node, and path taken
-    queue = [(0, start_point, [])]
-    # Set to keep track of nodes where deliveries have been completed
-    completed_deliveries = set()
-    # Dictionary to store the delivery paths to each house and the cost
-    delivery_routes = {}
+# Use breadth-first search to find the shortest route between two points.
+def bfs_shortest_route(graph, start, finish):
+    queue = [(start, [start])]  # Queue to manage the exploration, initialized with the starting point and its path
+    visited = set()  # keepin track of the visited point
+    delivery_routes = {} # Dictionary to store the delivery paths to each house and the cost
+
 
     # Loop through the queue until it's empty or all deliveries are made
     while queue:
-        distance_travelled, current_point, route = heapq.heappop(queue)
-        if current_point.startswith('H') and current_point not in completed_deliveries:
-            completed_deliveries.add(current_point)
-            delivery_routes[current_point] = (route + [current_point], distance_travelled)
-        if len(completed_deliveries) == len([node for node in network.nodes if node.startswith('H')]):
-            break
-        for adjacent, road in network.nodes[current_point].items():
-            if adjacent not in completed_deliveries or not adjacent.startswith('H'):
-                heapq.heappush(queue, (distance_travelled + road.distance, adjacent, route + [current_point]))
+        current_point, path = queue.pop(0)  #exploring/looking at the next point in the queue.
+        if current_point == finish:
+            return path  #if statnent for 'if' the destination is reached, return the path.
+        if current_point not in visited:
+            visited.add(current_point)
+            for neighbor, _ in graph.nodes[current_point].items():
+                if neighbor not in visited:
+                    queue.append(
+                        (neighbor, path + [neighbor]))  #here we r adding the neighboring points to the queue with updated path.
 
-    return delivery_routes
+    return []  # If no route is found, return an empty path.
 
 # Function to execute predefined test scenarios
-def run_test_cases(network):
+def run_test_cases(graph):
     # Predefined start points for test cases
     test_starts = ['1', '6', '12']
     for test_start in test_starts:
         print(f"Initiating delivery from junction: {test_start}")
-        delivery_routes = best_first_search(network, test_start)
-        for destination, (route, distance_travelled) in delivery_routes.items():
-            print(f"Delivered to {destination}: Route taken: {' -> '.join(route)}, Total distance: {distance_travelled}")
-        print("\n" + "="*50 + "\n")
+        delivery_routes = {}
+        for house in graph.nodes.keys():
+            if house.startswith('H'):
+                route = bfs_shortest_route(graph, test_start, house)
+                if route:
+                    delivery_routes[house] = route
+        for destination in delivery_routes:
+            route = delivery_routes[destination]
+            total_distance = sum(graph.nodes[route[i]][route[i + 1]].distance for i in range(len(route) - 1))
+            print(f"Delivered to> {destination}: Route taken: {' >>> '.join(route)}, Tot distance: {total_distance}")
+        print("\n" + "=" * 50 + "\n")
 
   # Entry point of the script
 def main():
     # Instantiate the network graph
-    network = NetworkGraph()
+    graph = NetworkGraph()
 
     # Data to populate the graph with nodes and their connections
     data = {
@@ -85,10 +90,10 @@ def main():
     for origin, connections in data.items():
         for destination, road_length in connections.items():
             pathway_id = f"{origin}-{destination}"
-            network.connect_nodes(origin, destination, pathway_id, road_length)
+            graph.connect_nodes(origin, destination, pathway_id, road_length)
 
     # Execute the test scenarios
-    run_test_cases(network)
+    run_test_cases(graph)
 
 # Ensure that the script runs only when executed directly
 if __name__ == "__main__":
